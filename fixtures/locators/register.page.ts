@@ -1,17 +1,17 @@
 export const registerPageLocators = {
-    "textboxs": {
-        "accountNumberInput": "#accountId",
-        "passwordInput": "#password",
-        "firstNameInput": "#firstName",
-        "lastNameInput": "#lastName"
+    textboxs: {
+        accountNumberInput: "#accountId",
+        passwordInput: "#password",
+        firstNameInput: "#firstName",
+        lastNameInput: "#lastName"
     },
-    "buttons": {
-        "registerButton": "[cid='rc']"
+    buttons: {
+        registerButton: "[cid='rc']"
     },
-    "labelErrors": { 
+    labelErrors: { 
         "registerError": "[cid='register-error-mes']",
     },
-    "lableLinks": { 
-        "registerLink": 'a[href="/register"]' 
+    lableLinks: { 
+        registerLink: 'a[href="/register"]' 
     }
 };
