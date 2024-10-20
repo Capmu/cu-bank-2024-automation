@@ -1,8 +1,7 @@
 import { Page,expect } from "@playwright/test";
-import { CommonPage } from "../common/page.common";
 import { registerPageLocators } from "../../fixtures/locators/register.page";
 import { CommonMongoDB } from "../common/mongo.common";
-// import { MongoClient } from 'mongodb';
+
 
 export class RegisterPage {
     readonly page: Page;

@@ -1,10 +1,10 @@
 export const loginPageLocators = {
-    "textboxs": {
+    textboxs: {
         "usernameInput": "#accountId",
         "passwordInput": "#password"
     },
-    "buttons": {
-        "loginButton": "[cid='lc']"
+    buttons: {
+        loginButton: "[cid='lc']"
     }
 }
 

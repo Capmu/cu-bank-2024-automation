@@ -11,12 +11,18 @@ export class CommonPage {
         await this.page.goto(process.env.CUBANK_WEB);
     }
 
-    async dialogMessage() {
-        // Listen for dialog events
+    async VerifyAlertMessage(expectedMessage: string) {
         this.page.on('dialog', async (dialog: Dialog) => {
-            console.log(`Dialog message: ${dialog.message()}`); // Log the dialog message
+            if (dialog.type() === 'alert') {
+                // Log the alert message
+                console.log(`Alert message: ${dialog.message()}`);
 
-            
+                // Verify the message
+                expect(dialog.message()).toBe(expectedMessage);
+
+                // Accept the alert
+                await dialog.accept(); 
+            }
         });
 
     }
