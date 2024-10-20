@@ -10,7 +10,7 @@ export class LoginPage {
     this.page = page;
   }
 
-  async enterCredentials(username: string, password:string){
+ async enterCredentials(username: string, password:string){  
     const usernameInput = this.page.locator(loginPageLocators.textboxs.usernameInput);
     await usernameInput.fill(username);
 
@@ -18,16 +18,16 @@ export class LoginPage {
     await passwordInput.fill(password);
   }
 
-  async clickLoginButton() {
+ async clickLoginButton() {
     const loginButton = this.page.locator(loginPageLocators.buttons.loginButton);
     await loginButton.click();
   }
 
-async verifyLoginSuccessful() {
+ async verifyLoginSuccessful() {
     await this.page.waitForURL(`${process.env.CUBANK_WEB}/account/`);
   }
 
-  async loginToCUBank(username: string, password: string, firstName:string) {
+ async loginToCUBank(username: string, password: string, firstName:string) {
     const commonPage = new CommonPage(this.page);
     
     await commonPage.navigateToCUBankPage(); 
