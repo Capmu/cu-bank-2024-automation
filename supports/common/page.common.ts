@@ -1,4 +1,4 @@
-import { Page } from '@playwright/test';
+import { Page,expect } from '@playwright/test';
 
 export class CommonPage {
     readonly page: Page;
@@ -7,9 +7,17 @@ export class CommonPage {
       this.page = page;
     }  
 
-// Common method to navigate to CU Bank login page
-async navigateToCUBankPage(page: Page) {
-  await this.page.goto(process.env.CUBANK_WEB);
+    async navigateToCUBankPage() {
+        await this.page.goto(process.env.CUBANK_WEB);
+    }
+
+    async dialogMessage() {
+        // Listen for dialog events
+        this.page.on('dialog', async (dialog: Dialog) => {
+            console.log(`Dialog message: ${dialog.message()}`); // Log the dialog message
+
+            
+        });
+
     }
 }
-
