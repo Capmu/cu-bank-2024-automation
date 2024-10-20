@@ -10,10 +10,6 @@ export class LoginPage {
     this.page = page;
   }
 
-  async navigateToLoginPage() {
-    await this.page.goto('http://localhost:3000');
-  }
-
   async enterCredentials(username: string, password:string){
     const usernameInput = this.page.locator(loginPageLocators.textboxs.usernameInput);
     await usernameInput.fill(username);
@@ -28,7 +24,7 @@ export class LoginPage {
   }
 
 async verifyLoginSuccessful() {
-   await this.page.waitForURL('http://localhost:3000/account/')
+    await this.page.waitForURL(`${process.env.CUBANK_WEB}/account/`);
   }
 
   async loginToCUBank(username: string, password: string, firstName:string) {
