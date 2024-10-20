@@ -9,6 +9,7 @@ export class CommonPage {
 
 // Common method to navigate to CU Bank login page
 async navigateToCUBankPage(page: Page) {
-  await this.page.goto('http://localhost:3000');
+  await this.page.goto(process.env.CUBANK_WEB);
     }
 }
+
