@@ -28,12 +28,12 @@ export class RegisterPage {
         await firstNameInput.fill(firstName);
 
         const lastNameInput = this.page.locator(registerPageLocators.textboxs.lastNameInput);
-        await lastNameInput.fill(lastName);
-        
+        await lastNameInput.fill(lastName)
+  
     }
 
     async clickRegisterButton(){
-        await this.page.locator(registerPageLocators.buttons.registerButton).click();;
+        await this.page.locator(registerPageLocators.buttons.registerButton).click();
     }
 
     async fetchUser(accountId: string) {

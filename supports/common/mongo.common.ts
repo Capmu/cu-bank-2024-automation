@@ -56,7 +56,7 @@ async deleteUser(accountId: string) {
 
         if (user) {
             const client = await this.connectToMongoDB(); 
-            const collection = await this.getUserCollection(client); 
+            const collection = await this.getUserCollection(client); // Get the collection reference
             
             // Delete the user document based on accountId
             const result = await collection.deleteOne({ accountId: accountId });
