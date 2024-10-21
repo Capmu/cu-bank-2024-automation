@@ -13,7 +13,6 @@ test('New user registration with valid credentials should succeed', async ({ pag
     await register.clickRegisterButton();
     await common.VerifyAlertMessage('Registration successful!');
     await register.deleteUser('0814939874'); 
-
 });
 
 
