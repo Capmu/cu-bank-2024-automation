@@ -10,7 +10,7 @@ export class CommonPage {
     async navigateToCUBankPage() {
         await this.page.goto(process.env.CUBANK_WEB);
     }
-
+    
     async VerifyAlertMessage(expectedMessage: string) {
         this.page.on('dialog', async (dialog: Dialog) => {
             if (dialog.type() === 'alert') {

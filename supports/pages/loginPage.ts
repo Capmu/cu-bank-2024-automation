@@ -1,7 +1,6 @@
 import { Page,expect } from "@playwright/test";
 import { CommonPage } from "../common/page.common";
 import { loginPageLocators } from "../../fixtures/locators/login.page";
-import { console } from "inspector";
 
 export class LoginPage {
   readonly page: Page;

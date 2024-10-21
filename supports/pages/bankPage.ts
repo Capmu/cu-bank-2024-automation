@@ -39,7 +39,6 @@ export class BankPage {
 
         return this.accountDetails; // Return the account details
         
-        
     }
 
     async verifyBalaceAfter(amount: string) {
@@ -47,9 +46,11 @@ export class BankPage {
 
         const balance = this.accountDetails.balance; // Use stored balance
         const actualBalance = balance + depositAmount; // Calculate expected balance
+        console.log('actualBalance', actualBalance)
 
         const accountDetails = await this.getAccountDetails();
         const expectedBalance  = accountDetails.balance;
+        console.log('expectedBalance', expectedBalance)
         
         // Compare expected balance with actual balance
         try {
