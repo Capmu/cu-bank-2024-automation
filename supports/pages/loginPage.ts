@@ -1,4 +1,4 @@
-import { Page,expect } from "@playwright/test";
+import { Page, expect } from "@playwright/test";
 import { CommonPage } from "../common/page.common";
 import { loginPageLocators } from "../../fixtures/locators/login.page";
 
@@ -9,32 +9,43 @@ export class LoginPage {
     this.page = page;
   }
 
- async enterCredentials(username: string, password:string){  
-    const usernameInput = this.page.locator(loginPageLocators.textboxs.usernameInput);
+  async enterCredentials(username: string, password: string) {
+    const usernameInput = this.page.locator(
+      loginPageLocators.textboxs.usernameInput
+    );
     await usernameInput.fill(username);
 
-    const passwordInput = this.page.locator(loginPageLocators.textboxs.passwordInput);
+    const passwordInput = this.page.locator(
+      loginPageLocators.textboxs.passwordInput
+    );
     await passwordInput.fill(password);
   }
 
- async clickLoginButton() {
-    const loginButton = this.page.locator(loginPageLocators.buttons.loginButton);
+  async clickLoginButton() {
+    const loginButton = this.page.locator(
+      loginPageLocators.buttons.loginButton
+    );
     await loginButton.click();
   }
 
- async verifyLoginSuccessful() {
+  async verifyLoginSuccessful() {
     await this.page.waitForURL(`${process.env.CUBANK_WEB}/account/`);
   }
 
- async loginToCUBank(username: string, password: string) {
+  async loginToCUBank(username: string, password: string) {
     const commonPage = new CommonPage(this.page);
-    
-    await commonPage.navigateToCUBankPage(); 
+
+    await commonPage.navigateToCUBankPage();
 
     // Enter credentials and click login
     await this.enterCredentials(username, password);
     await this.clickLoginButton();
-    await this.verifyLoginSuccessful();
+  }
+
+  async verifyLoginFailure(expectedErrorMessage: string) {
+    const errorMessageLocators = this.page.locator(
+      loginPageLocators.label.errorMsgLabel
+    );
+    await expect(errorMessageLocators).toHaveText(expectedErrorMessage);
   }
 }
-
