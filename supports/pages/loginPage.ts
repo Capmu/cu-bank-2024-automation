@@ -26,7 +26,7 @@ export class LoginPage {
     await this.page.waitForURL(`${process.env.CUBANK_WEB}/account/`);
   }
 
- async loginToCUBank(username: string, password: string, firstName:string) {
+ async loginToCUBank(username: string, password: string) {
     const commonPage = new CommonPage(this.page);
     
     await commonPage.navigateToCUBankPage(); 

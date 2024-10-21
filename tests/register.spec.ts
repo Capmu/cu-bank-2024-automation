@@ -2,17 +2,27 @@ import { test, expect } from '@playwright/test';
 import { RegisterPage } from '../supports/pages/registerPage';
 import { CommonPage } from '../supports/common/page.common';
 
+let common;
+let register;
+let accountNumber = '0814939874';
 
-test('New user registration with valid credentials should succeed', async ({ page }) => {
-    const register= new RegisterPage(page);
-    const common= new CommonPage(page);
-    
+test.beforeEach(async ({ page }) => {
+    register = new RegisterPage(page);
+    common = new CommonPage(page);
+
+    //navigate register to fill from
     await common.navigateToCUBankPage();
     await register.clickRegisterLink();
-    await register.fillRegisterForm('0814939874','1234','aphirak','phothisa');
-    await register.clickRegisterButton();
-    await common.VerifyAlertMessage('Registration successful!');
-    await register.deleteUser('0814939874'); 
 });
 
+test('New user registration with valid credentials should succeed', async ({ page }) => {
+    await register.fillRegisterForm(accountNumber,'1234','aphirak','phothisa');
+    await register.clickRegisterButton();
+    await common.VerifyAlertMessage('Registration successful!');
+});
 
+test.afterEach(async ({ page }) => {    
+  
+   await register.deleteUser(accountNumber);
+        
+});
