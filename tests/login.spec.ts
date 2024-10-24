@@ -9,8 +9,9 @@ test.beforeEach(async ({ page }) => {
   login = new LoginPage(page);
 });
 
+
 test.describe("Invalid Account Number", () => {
-  test("TC001: Invalid account number (non-numeric characters)", async ({
+  test("TC-LOGIN-2: Invalid account number (non-numeric characters)", async ({
     page,
   }) => {
     const username =
@@ -23,7 +24,7 @@ test.describe("Invalid Account Number", () => {
     );
   });
 
-  test("TC002: Invalid account number (less than 10 digits)", async ({
+  test("TC-LOGIN-3: Invalid account number (less than 10 digits)", async ({
     page,
   }) => {
     const username =
@@ -37,7 +38,7 @@ test.describe("Invalid Account Number", () => {
     );
   });
 
-  test("TC003: Invalid account number (more than 10 digits)", async ({
+  test("TC-LOGIN-4: Invalid account number (more than 10 digits)", async ({
     page,
   }) => {
     const username =
@@ -51,7 +52,7 @@ test.describe("Invalid Account Number", () => {
     );
   });
 
-  test("TC004: Account number not found", async ({ page }) => {
+  test("TC-LOGIN-5: Account number not found", async ({ page }) => {
     const username = loginPageTestData.accountNotFound.accountNumber;
     const password = loginPageTestData.accountNotFound.password;
 
@@ -60,68 +61,8 @@ test.describe("Invalid Account Number", () => {
       "User not found. Please check your account ID."
     );
   });
-});
-
-test.describe("Invalid Password", () => {
-  test("TC005: Invalid password (non-numeric characters)", async ({ page }) => {
-    const username = loginPageTestData.invalidPasswordNonNumeric.accountNumber;
-    const password = loginPageTestData.invalidPasswordNonNumeric.password;
-
-    await login.loginToCUBank(username, password);
-    await login.verifyLoginFailure(
-      "Your password should contain numbers only."
-    );
-  });
-
-  test("TC006: Invalid password (less than 4 digits)", async ({ page }) => {
-    const username =
-      loginPageTestData.invalidPasswordLessThan4Digits.accountNumber;
-    const password = loginPageTestData.invalidPasswordLessThan4Digits.password;
-
-    await login.loginToCUBank(username, password);
-    await login.verifyLoginFailure(
-      "Your password must be exactly 4 digits long."
-    );
-  });
-
-  test("TC007: Invalid password (more than 4 digits)", async ({ page }) => {
-    const username =
-      loginPageTestData.invalidPasswordMoreThan4Digits.accountNumber;
-    const password = loginPageTestData.invalidPasswordMoreThan4Digits.password;
-
-    await login.loginToCUBank(username, password);
-    await login.verifyLoginFailure(
-      "Your password must be exactly 4 digits long."
-    );
-  });
-
-  test("TC008: Incorrect password", async ({ page }) => {
-    const username = loginPageTestData.incorrectPassword.accountNumber;
-    const password = loginPageTestData.incorrectPassword.password;
-
-    await login.loginToCUBank(username, password);
-    await login.verifyLoginFailure("Incorrect password. Please try again.");
-  });
-});
-
-test.describe("Required Field Validation", () => {
-  test("TC009: Empty password field should show required message", async ({
-    page,
-  }) => {
-    const username = loginPageTestData.emptyPasswordFields.accountNumber;
-    const password = loginPageTestData.emptyPasswordFields.password;
-
-    await login.loginToCUBank(username, password);
-    const passwordInput = await page.locator(
-      loginPageLocators.textboxs.passwordInput
-    );
-    const validationMessage = await passwordInput.evaluate(
-      (input) => input.validationMessage
-    );
-    expect(validationMessage).toBe("Please fill out this field.");
-  });
-
-  test("TC010: Empty account number field should show required message", async ({
+  
+  test("TC-LOGIN-6: Empty account number field should show required message", async ({
     page,
   }) => {
     const username = loginPageTestData.emptyAccountNumberFields.accountNumber;
@@ -137,3 +78,61 @@ test.describe("Required Field Validation", () => {
     expect(validationMessage).toBe("Please fill out this field.");
   });
 });
+
+test.describe("Invalid Password", () => {
+  test("TC-LOGIN-7: Invalid password (non-numeric characters)", async ({ page }) => {
+    const username = loginPageTestData.invalidPasswordNonNumeric.accountNumber;
+    const password = loginPageTestData.invalidPasswordNonNumeric.password;
+
+    await login.loginToCUBank(username, password);
+    await login.verifyLoginFailure(
+      "Your password should contain numbers only."
+    );
+  });
+
+  test("TC-LOGIN-8: Invalid password (less than 4 digits)", async ({ page }) => {
+    const username =
+      loginPageTestData.invalidPasswordLessThan4Digits.accountNumber;
+    const password = loginPageTestData.invalidPasswordLessThan4Digits.password;
+
+    await login.loginToCUBank(username, password);
+    await login.verifyLoginFailure(
+      "Your password must be exactly 4 digits long."
+    );
+  });
+
+  test("TC-LOGIN-9: Invalid password (more than 4 digits)", async ({ page }) => {
+    const username =
+      loginPageTestData.invalidPasswordMoreThan4Digits.accountNumber;
+    const password = loginPageTestData.invalidPasswordMoreThan4Digits.password;
+
+    await login.loginToCUBank(username, password);
+    await login.verifyLoginFailure(
+      "Your password must be exactly 4 digits long."
+    );
+  });
+
+  test("TC-LOGIN-10: Incorrect password", async ({ page }) => {
+    const username = loginPageTestData.incorrectPassword.accountNumber;
+    const password = loginPageTestData.incorrectPassword.password;
+
+    await login.loginToCUBank(username, password);
+    await login.verifyLoginFailure("Incorrect password. Please try again.");
+  });
+  test("TC-LOGIN-11: Empty password field should show required message", async ({
+    page,
+  }) => {
+    const username = loginPageTestData.emptyPasswordFields.accountNumber;
+    const password = loginPageTestData.emptyPasswordFields.password;
+
+    await login.loginToCUBank(username, password);
+    const passwordInput = await page.locator(
+      loginPageLocators.textboxs.passwordInput
+    );
+    const validationMessage = await passwordInput.evaluate(
+      (input) => input.validationMessage
+    );
+    expect(validationMessage).toBe("Please fill out this field.");
+  });
+});
+

@@ -8,7 +8,7 @@ export const loginPageTestData = {
       password: "1234",
     },
     invalidAccountNumberMoreThan10Digits: {
-      accountNumber: "12345678901",
+      accountNumber: "08149398739",
       password: "1234",
     },
     accountNotFound: {
