@@ -16,10 +16,11 @@ test.beforeEach(async ({ page }) => {
 });
 
 test("Deposit successfully", async ({ page }) => {
-  const amonut = "100";
-
+  const amonut = "200";
   await bank.getAccountDetails();
   await bank.enterDepositAmonut(amonut);
   await bank.clickDepositConfirm();
   await bank.verifyBalaceAfter(amonut);
+  await bank.getLastHistoryDetail();
+  await bank.verifyHistoryTransaction('deposit', amonut);
 });
