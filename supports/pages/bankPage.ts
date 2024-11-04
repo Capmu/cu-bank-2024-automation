@@ -37,8 +37,8 @@ export class BankPage {
       .locator(bankPageLocators.title.lable.balance)
       .textContent();
 
-    console.log("accountId", accountId);
-    console.log("name", name);
+    // console.log("accountId", accountId);
+    // console.log("name", name);
     // console.log('balance',balance)
     // Store the account details in the property
     this.accountDetails = {
@@ -51,25 +51,23 @@ export class BankPage {
   }
 
   async verifyBalaceAfter(amount: string) {
-    const depositAmount = parseFloat(amount);
+    const transactionAmount = parseFloat(amount);
+    console.log("transactionAmount", transactionAmount);
 
-    const balance = this.accountDetails.balance; // Use stored balance
-    const actualBalance = balance + depositAmount; // Calculate expected balance
+    // Get the current balance before
+    const currentBalance = this.accountDetails.balance; 
+    console.log("currentBalance", currentBalance);
+    
+    // Calculate the expected balance 
+    const expectedBalance = currentBalance + transactionAmount; 
+    console.log("expectedBalance", expectedBalance);
+    
+    // Fetch the account details to get the actual balance
+    const accountDetails = await this.getAccountDetails();
+    const actualBalance = accountDetails.balance;
     console.log("actualBalance", actualBalance);
 
-    const accountDetails = await this.getAccountDetails();
-    const expectedBalance = accountDetails.balance;
-    console.log("expectedBalance", expectedBalance);
+    expect(actualBalance).toBe(expectedBalance);
 
-    // Compare expected balance with actual balance
-    try {
-      expect(actualBalance).toBe(expectedBalance);
-      console.log("Balance verification passed.");
-    } catch (error) {
-      console.error(
-        `Balance verification failed: expected ${expectedBalance}, but got ${actualBalance}.`
-      );
-      console.error(error); // Log the error for debugging
-    }
   }
 }
