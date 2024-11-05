@@ -2,137 +2,154 @@ import { test, expect } from "@playwright/test";
 import { LoginPage } from "../supports/pages/loginPage";
 import { loginPageTestData } from "../fixtures/testData/login.page";
 import { loginPageLocators } from "../fixtures/locators/login.page";
+import { CommonPage } from "../supports/common/page.common";
 
-let login;
+let login: LoginPage;
+let common: CommonPage;
 
 test.beforeEach(async ({ page }) => {
   login = new LoginPage(page);
+  common = new CommonPage(page);
+
 });
 
+test.describe("Scenario: Login Successful", () => {
 
-test.describe("Invalid Account Number", () => {
-  test("TC-LOGIN-2: Invalid account number (non-numeric characters)", async ({
-    page,
-  }) => {
-    const username =
-      loginPageTestData.invalidAccountNumberNonNumeric.accountNumber;
-    const password = loginPageTestData.invalidAccountNumberNonNumeric.password;
+  test("TC-LOGIN-EC1", async ({ page }) => {
+  const username = loginPageTestData.accountNumber.numeric10Digits.isExist;
+  const password = loginPageTestData.password.numeric4Digit.isExist;
 
-    await login.loginToCUBank(username, password);
-    await login.verifyLoginFailure(
-      "Your account ID should contain numbers only."
-    );
-  });
+  await login.loginToCUBank(username, password);
+  await login.verifyLoginSuccessful();
+});
+});
 
-  test("TC-LOGIN-3: Invalid account number (less than 10 digits)", async ({
-    page,
-  }) => {
-    const username =
-      loginPageTestData.invalidAccountNumberLessThan10Digits.accountNumber;
-    const password =
-      loginPageTestData.invalidAccountNumberLessThan10Digits.password;
+test.describe("Scenario: Login Not Successful", () => {
 
-    await login.loginToCUBank(username, password);
-    await login.verifyLoginFailure(
-      "Your account ID must be exactly 10 digits long."
-    );
-  });
+test("TC-LOGIN-EC2", async ({ page }) => {
+  const username = loginPageTestData.accountNumber.numeric10Digits.isExist;
+  const password = loginPageTestData.password.numeric4Digit.notExist;
 
-  test("TC-LOGIN-4: Invalid account number (more than 10 digits)", async ({
-    page,
-  }) => {
-    const username =
-      loginPageTestData.invalidAccountNumberMoreThan10Digits.accountNumber;
-    const password =
-      loginPageTestData.invalidAccountNumberMoreThan10Digits.password;
+  await login.loginToCUBank(username, password);
+  await login.verifyLoginFailure("Incorrect password. Please try again.");
+});
 
-    await login.loginToCUBank(username, password);
-    await login.verifyLoginFailure(
-      "Your account ID must be exactly 10 digits long."
-    );
-  });
+test("TC-LOGIN-EC3", async ({ page }) => {
+  const username = loginPageTestData.accountNumber.numeric10Digits.notExist;
+  const password = loginPageTestData.password.numeric4Digit.isExist;
 
-  test("TC-LOGIN-5: Account number not found", async ({ page }) => {
-    const username = loginPageTestData.accountNotFound.accountNumber;
-    const password = loginPageTestData.accountNotFound.password;
+  await login.loginToCUBank(username, password);
+  await login.verifyLoginFailure("User not found. Please check your account ID.");
+});
 
-    await login.loginToCUBank(username, password);
-    await login.verifyLoginFailure(
-      "User not found. Please check your account ID."
-    );
-  });
+test("TC-LOGIN-EC4", async ({ page }) => {
+  const username = loginPageTestData.accountNumber.numeric10Digits.notExist;
+  const password = loginPageTestData.password.numeric4Digit.notExist;
+
+  await login.loginToCUBank(username, password);
+  await login.verifyLoginFailure("User not found. Please check your account ID.");
+});
+
+test("TC-LOGIN-EC5", async ({ page }) => {
+  const username = loginPageTestData.accountNumber.nonNumeric10Digits;
+  const password = loginPageTestData.password.numeric4Digit.isExist;
+
+  await login.loginToCUBank(username, password);
+  await login.verifyLoginFailure("Your account ID should contain numbers only.");
+});
+
+test("TC-LOGIN-EC6", async ({ page }) => {
+  const username = loginPageTestData.accountNumber.numericMoreThan10Digits;
+  const password = loginPageTestData.password.numeric4Digit.isExist;
+
+  await login.loginToCUBank(username, password);
+  await login.verifyLoginFailure("Your account ID must be exactly 10 digits long.");
+});
+
+test("TC-LOGIN-EC7", async ({ page }) => {
+  const username = loginPageTestData.accountNumber.nonNumericMoreThan10Digits;
+  const password = loginPageTestData.password.numeric4Digit.isExist;
+
+  await login.loginToCUBank(username, password);
+  await login.verifyLoginFailure("Your account ID should contain numbers only.");
+});
+
+test("TC-LOGIN-EC8", async ({ page }) => {
+  const username = loginPageTestData.accountNumber.nonNumericLessThan10Digits;
+  const password = loginPageTestData.password.numeric4Digit.isExist;
+
+  await login.loginToCUBank(username, password);
+  await login.verifyLoginFailure("Your account ID should contain numbers only.");
+});
+
+test("TC-LOGIN-EC9", async ({ page }) => {
+  const username = loginPageTestData.accountNumber.numericLessThan10Digits;
+  const password = loginPageTestData.password.numeric4Digit.isExist;
+
+  await login.loginToCUBank(username, password);
+  await login.verifyLoginFailure("Your account ID must be exactly 10 digits long.");
+});
+
+test("TC-LOGIN-EC10", async ({ page }) => {
+  const username = loginPageTestData.accountNumber.empty;
+  const password = loginPageTestData.password.numeric4Digit.isExist;
   
-  test("TC-LOGIN-6: Empty account number field should show required message", async ({
-    page,
-  }) => {
-    const username = loginPageTestData.emptyAccountNumberFields.accountNumber;
-    const password = loginPageTestData.emptyAccountNumberFields.password;
+  await login.loginToCUBank(username, password);
+  const usernameInputLocator = page.locator(loginPageLocators.textboxs.usernameInput);
+  const validationMessage = await common.verifyRequiredFieldMessage(usernameInputLocator);
+  expect(validationMessage).toBe("Please fill out this field.");
 
-    await login.loginToCUBank(username, password);
-    const accountInput = await page.locator(
-      loginPageLocators.textboxs.usernameInput
-    );
-    const validationMessage = await accountInput.evaluate(
-      (input) => input.validationMessage
-    );
-    expect(validationMessage).toBe("Please fill out this field.");
-  });
 });
 
-test.describe("Invalid Password", () => {
-  test("TC-LOGIN-7: Invalid password (non-numeric characters)", async ({ page }) => {
-    const username = loginPageTestData.invalidPasswordNonNumeric.accountNumber;
-    const password = loginPageTestData.invalidPasswordNonNumeric.password;
+test("TC-LOGIN-EC11", async ({ page }) => {
+  const username = loginPageTestData.accountNumber.numeric10Digits.isExist;
+  const password = loginPageTestData.password.nonNumeric4Digits;
 
-    await login.loginToCUBank(username, password);
-    await login.verifyLoginFailure(
-      "Your password should contain numbers only."
-    );
-  });
-
-  test("TC-LOGIN-8: Invalid password (less than 4 digits)", async ({ page }) => {
-    const username =
-      loginPageTestData.invalidPasswordLessThan4Digits.accountNumber;
-    const password = loginPageTestData.invalidPasswordLessThan4Digits.password;
-
-    await login.loginToCUBank(username, password);
-    await login.verifyLoginFailure(
-      "Your password must be exactly 4 digits long."
-    );
-  });
-
-  test("TC-LOGIN-9: Invalid password (more than 4 digits)", async ({ page }) => {
-    const username =
-      loginPageTestData.invalidPasswordMoreThan4Digits.accountNumber;
-    const password = loginPageTestData.invalidPasswordMoreThan4Digits.password;
-
-    await login.loginToCUBank(username, password);
-    await login.verifyLoginFailure(
-      "Your password must be exactly 4 digits long."
-    );
-  });
-
-  test("TC-LOGIN-10: Incorrect password", async ({ page }) => {
-    const username = loginPageTestData.incorrectPassword.accountNumber;
-    const password = loginPageTestData.incorrectPassword.password;
-
-    await login.loginToCUBank(username, password);
-    await login.verifyLoginFailure("Incorrect password. Please try again.");
-  });
-  test("TC-LOGIN-11: Empty password field should show required message", async ({
-    page,
-  }) => {
-    const username = loginPageTestData.emptyPasswordFields.accountNumber;
-    const password = loginPageTestData.emptyPasswordFields.password;
-
-    await login.loginToCUBank(username, password);
-    const passwordInput = await page.locator(
-      loginPageLocators.textboxs.passwordInput
-    );
-    const validationMessage = await passwordInput.evaluate(
-      (input) => input.validationMessage
-    );
-    expect(validationMessage).toBe("Please fill out this field.");
-  });
+  await login.loginToCUBank(username, password);
+  await login.verifyLoginFailure("Your password should contain numbers only.");
 });
 
+test("TC-LOGIN-EC12", async ({ page }) => {
+  const username = loginPageTestData.accountNumber.numeric10Digits.isExist;
+  const password = loginPageTestData.password.nonNumericMoreThan4Digits;
+
+  await login.loginToCUBank(username, password);
+  await login.verifyLoginFailure("Your password should contain numbers only.");
+});
+
+test("TC-LOGIN-EC13", async ({ page }) => {
+  const username = loginPageTestData.accountNumber.numeric10Digits.isExist;
+  const password = loginPageTestData.password.numericMoreThan4Digits;
+
+  await login.loginToCUBank(username, password);
+  await login.verifyLoginFailure("Your password must be exactly 4 digits long.");
+});
+
+test("TC-LOGIN-EC14", async ({ page }) => {
+  const username = loginPageTestData.accountNumber.numeric10Digits.isExist;
+  const password = loginPageTestData.password.nonNumericLessThan4Digits;
+
+  await login.loginToCUBank(username, password);
+  await login.verifyLoginFailure("Your password should contain numbers only.");
+});
+
+test("TC-LOGIN-EC15", async ({ page }) => {
+  const username = loginPageTestData.accountNumber.numeric10Digits.isExist;
+  const password = loginPageTestData.password.numericLessThan4Digits;
+
+  await login.loginToCUBank(username, password);
+  await login.verifyLoginFailure("Your password must be exactly 4 digits long.");
+});
+
+test("TC-LOGIN-EC16", async ({ page }) => {
+  const username = loginPageTestData.accountNumber.numeric10Digits.isExist;
+  const password = loginPageTestData.password.empty;
+
+    await login.loginToCUBank(username, password);
+    const passwordInputLocator = page.locator(loginPageLocators.textboxs.passwordInput);
+    const validationMessage = await common.verifyRequiredFieldMessage(passwordInputLocator);
+    expect(validationMessage).toBe("Please fill out this field.");
+
+  });
+
+});
