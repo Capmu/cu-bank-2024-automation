@@ -1,43 +1,26 @@
 export const loginPageTestData = {
-    invalidAccountNumberNonNumeric: {
-      accountNumber: "12345abcde",
-      password: "1234",
+  accountNumber: {
+    numeric10Digits: { 
+      isExist: "0814939873",
+      notExist: "0814939880"
     },
-    invalidAccountNumberLessThan10Digits: {
-      accountNumber: "123456",
-      password: "1234",
+    nonNumeric10Digits: "aaaaaaaaaa", 
+    numericMoreThan10Digits: "12345678901", 
+    nonNumericMoreThan10Digits: "aaaaaaaaaabb", 
+    numericLessThan10Digits: "5555", 
+    nonNumericLessThan10Digits: "aaaa",
+    empty: ""
+  },
+  password: {
+    numeric4Digit: {
+      isExist: "1234",
+      notExist: "5555"
     },
-    invalidAccountNumberMoreThan10Digits: {
-      accountNumber: "08149398739",
-      password: "1234",
-    },
-    accountNotFound: {
-      accountNumber: "9876543210",
-      password: "1234",
-    },
-    invalidPasswordNonNumeric: {
-      accountNumber: "0814939873",
-      password: "12ab",
-    },
-    invalidPasswordLessThan4Digits: {
-      accountNumber: "0814939873",
-      password: "12",
-    },
-    invalidPasswordMoreThan4Digits: {
-      accountNumber: "0814939873",
-      password: "12345",
-    },
-    incorrectPassword: {
-      accountNumber: "0814939873",
-      password: "5555",
-    },
-    emptyPasswordFields: {
-      accountNumber: "0814939873",
-      password: "",
-    },
-    emptyAccountNumberFields: {
-      accountNumber: "",
-      password: "1234",
-    },
-  };
-  
+    nonNumeric4Digits: "abcd", 
+    numericMoreThan4Digits: "123456", 
+    nonNumericMoreThan4Digits: "abcdef", 
+    numericLessThan4Digits: "12", 
+    nonNumericLessThan4Digits: "ab",
+    empty: ""
+  }
+};

@@ -12,7 +12,7 @@ export class CommonMongoDB {
   async connectToMongoDB(): Promise<MongoClient> {
     // Create a new MongoClient if not already connected
     if (!this.client) {
-      this.client = new MongoClient(process.env.MONGODB_URI);
+      this.client = new MongoClient(process.env.MONGODB_URI as string);
       try {
         await this.client.connect(); // Connect to MongoDB
         console.log("Connected to MongoDB successfully.");
@@ -24,9 +24,9 @@ export class CommonMongoDB {
     return this.client; // Return the connected client
   }
 
-  async getUserCollection() {
+  async getUserCollection(client?: MongoClient) {
     const db = this.client!.db(process.env.DB);
-    return db.collection(process.env.COLLECTION); // Return the collection \
+    return db.collection(process.env.COLLECTION as string); // Return the collection \
   }
 
   async fetchUser(accountId: string) {
