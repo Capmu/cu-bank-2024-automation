@@ -58,7 +58,7 @@ export class TransferPage {
     await expect(errorMessageLocators).toHaveText(errorMessage);
   }
 
-  async clickDepositConfirm() {
+  async clickTransferConfirm() {
     const transferConfirmButton = this.page.locator(
       bankPageLocators.transfer.confirmButton
     );
@@ -99,11 +99,22 @@ export class TransferPage {
     expect(actualBalance).toBe(expectedBalance);
   }
 
-  async verifyHistoryTransaction(amount: string) {}
-
   async logout() {
     const logoutButton = this.page.locator(bankPageLocators.transfer.logout);
     await logoutButton.click();
+  }
+
+  async verifyHistoryTransaction(transaction: string, amount: string) {
+    const historyListLocator = this.page.locator(
+      bankPageLocators.history.lable.historyList
+    );
+
+    const historyItemLocator = historyListLocator.filter({
+      hasText: transaction,
+    });
+    const historyDetail = await this.getHistoryDetails(historyItemLocator);
+    console.log(historyDetail.amount);
+    expect(historyDetail.amount.toString()).toBe(amount);
   }
 
   async getLastHistoryDetail() {
@@ -112,44 +123,18 @@ export class TransferPage {
     );
 
     // Helper function to extract details from a given history locator
-    const getHistoryDetails = async (locator) => {
-      const type = await locator
-        .locator(bankPageLocators.history.lable.type)
-        .textContent();
-      const date = await locator
-        .locator(bankPageLocators.history.lable.date)
-        .textContent();
-      const target = await locator
-        .locator(bankPageLocators.history.lable.target)
-        .textContent();
-      const amount = await locator
-        .locator(bankPageLocators.history.lable.amount)
-        .textContent();
-      const balance = await locator
-        .locator(bankPageLocators.history.lable.balance)
-        .textContent();
-
-      return {
-        type: type?.trim() || "",
-        date: date?.replace(/^date:\s*/, "").trim() || "",
-        target: target?.replace(/^target:\s*/, "").trim() || "",
-        amount: parseFloat(amount?.replace(/^amount:\s*/, "").trim() || "0"),
-        balance: parseFloat(balance?.replace(/^balance:\s*/, "").trim() || "0"),
-      };
-    };
 
     // Extract details for last and second-to-last history items
     const lastHistoryLocator = historyListLocator.last();
     const prevLastHistoryLocator = historyListLocator.nth(-2);
 
-    this.lastHistoryDetails = await getHistoryDetails(lastHistoryLocator);
-    this.prevlastHistoryDetails = await getHistoryDetails(
+    this.lastHistoryDetails = await this.getHistoryDetails(lastHistoryLocator);
+    this.prevlastHistoryDetails = await this.getHistoryDetails(
       prevLastHistoryLocator
     );
 
     // Log details
     const logHistoryDetails = (label, details) => {
-      console.log(`-------------------------------------`);
       console.log(`${label} Details:`);
       console.log("Type:", details.type);
       console.log("Date:", details.date);
@@ -162,5 +147,30 @@ export class TransferPage {
     logHistoryDetails("Last", this.lastHistoryDetails);
 
     return this.lastHistoryDetails; // Return the Last History Details
+  }
+  async getHistoryDetails(locator) {
+    const type = await locator
+      .locator(bankPageLocators.history.lable.type)
+      .textContent();
+    const date = await locator
+      .locator(bankPageLocators.history.lable.date)
+      .textContent();
+    const target = await locator
+      .locator(bankPageLocators.history.lable.target)
+      .textContent();
+    const amount = await locator
+      .locator(bankPageLocators.history.lable.amount)
+      .textContent();
+    const balance = await locator
+      .locator(bankPageLocators.history.lable.balance)
+      .textContent();
+
+    return {
+      type: type?.trim() || "",
+      date: date?.replace(/^date:\s*/, "").trim() || "",
+      target: target?.replace(/^target:\s*/, "").trim() || "",
+      amount: parseFloat(amount?.replace(/^amount:\s*/, "").trim() || "0"),
+      balance: parseFloat(balance?.replace(/^balance:\s*/, "").trim() || "0"),
+    };
   }
 }
