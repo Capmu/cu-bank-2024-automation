@@ -114,7 +114,13 @@ export class BankPage {
     return this.lastHistoryDetails; // Return the Last History Details
   }
 
-  async verifyHistoryTransaction(type: string, amount: number, target: string) {
+  async verifyCurrentBalance() {
+    // Ensure the current balance is a valid number before proceeding with the deposit
+    const accountDetails = await this.getAccountDetails();
+    expect(accountDetails?.balance?.toString()).toMatch(/^\d+(\.\d+)?$/);
+  }
+
+  async verifyHistoryTransaction(type: string, amount: number, target: string = '') {
     const expectedType = type;
     const expectedAmount = Number(amount);
     const expectedBalance = this.accountDetails.balance;
@@ -144,6 +150,8 @@ export class BankPage {
     } else if (expectedType.startsWith("transfer to")) {
       // Verify Target for transfer to
       expect(actualTarget).toBe("3548637485");
+    } else {
+      expect(actualTarget).toBe(target);
     }
   }
 }
