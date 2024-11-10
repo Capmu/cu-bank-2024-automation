@@ -114,7 +114,12 @@ export class BankPage {
     return this.lastHistoryDetails; // Return the Last History Details
   }
 
-  async verifyHistoryTransaction(type: string, amount: number, target: string) {
+  async verifyCurrentBalance() {
+    const accountDetails = await this.getAccountDetails();
+    expect(accountDetails?.balance?.toString()).toMatch(/^\d+(\.\d+)?$/); // Verify balance format
+  }
+
+  async verifyHistoryTransaction(type: string, amount: number, target: string = '') {
     const expectedType = type;
     const expectedAmount = Number(amount);
     const expectedBalance = this.accountDetails.balance;
@@ -138,12 +143,7 @@ export class BankPage {
     // Verify balance
     expect(actualBalance).toBe(expectedBalance);
 
-    if (expectedType === "billpayment") {
-      // Verify Target for billpayment
-      expect(actualTarget).toBe("phone");
-    } else if (expectedType.startsWith("transfer to")) {
-      // Verify Target for transfer to
-      expect(actualTarget).toBe("3548637485");
-    }
+    // Verify target
+    expect(actualTarget).toBe(target);
   }
 }
