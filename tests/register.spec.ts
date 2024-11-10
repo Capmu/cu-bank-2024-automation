@@ -77,7 +77,7 @@ test.describe("Unsuccessful Registration", () => {
       await register.verifyRegisterFailure("Your account ID must be exactly 10 digits long.");
     });
     test("TC-REG-06", async ({ page }) => {
-      const accountNumber = registerPageTestData.accountNumber.numeric10Digits.isExist;
+      const accountNumber = registerPageTestData.accountNumber.empty;
       const password = registerPageTestData.password.numeric4Digit;
       const firstName = registerPageTestData.fullName.firstName.normal;
       const lastName = registerPageTestData.fullName.lastName.normal;
@@ -121,7 +121,7 @@ test.describe("Unsuccessful Registration", () => {
     });
     test("TC-REG-10", async ({ page }) => {
       const accountNumber = registerPageTestData.accountNumber.numeric10Digits.notExist;
-      const password = registerPageTestData.password.nonNumeric;
+      const password = registerPageTestData.password.empty;
       const firstName = registerPageTestData.fullName.firstName.normal;
       const lastName = registerPageTestData.fullName.lastName.normal;
       await register.fillRegisterForm(accountNumber,password,firstName,lastName
@@ -135,8 +135,8 @@ test.describe("Unsuccessful Registration", () => {
     test("TC-REG-11", async ({ page }) => {
       const accountNumber = registerPageTestData.accountNumber.numeric10Digits.notExist;
       const password = registerPageTestData.password.numeric4Digit;
-      const firstName = registerPageTestData.fullName.firstName.exceed30Char;
-      const lastName = registerPageTestData.fullName.lastName.exceed30Char;
+      const firstName = registerPageTestData.fullName.firstName.empty;
+      const lastName = registerPageTestData.fullName.lastName.empty;
       await register.fillRegisterForm(accountNumber,password,firstName,lastName
       );
       await register.clickRegisterButton();
