@@ -115,9 +115,8 @@ export class BankPage {
   }
 
   async verifyCurrentBalance() {
-    // Ensure the current balance is a valid number before proceeding with the deposit
     const accountDetails = await this.getAccountDetails();
-    expect(accountDetails?.balance?.toString()).toMatch(/^\d+(\.\d+)?$/);
+    expect(accountDetails?.balance?.toString()).toMatch(/^\d+(\.\d+)?$/); // Verify balance format
   }
 
   async verifyHistoryTransaction(type: string, amount: number, target: string = '') {
@@ -144,14 +143,7 @@ export class BankPage {
     // Verify balance
     expect(actualBalance).toBe(expectedBalance);
 
-    if (expectedType === "billpayment") {
-      // Verify Target for billpayment
-      expect(actualTarget).toBe("phone");
-    } else if (expectedType.startsWith("transfer to")) {
-      // Verify Target for transfer to
-      expect(actualTarget).toBe("3548637485");
-    } else {
-      expect(actualTarget).toBe(target);
-    }
+    // Verify target
+    expect(actualTarget).toBe(target);
   }
 }
