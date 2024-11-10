@@ -13,8 +13,8 @@ export const registerPageTestData = {
   },
   password: {
     numeric4Digit: "1111",
-    nonNumeric4Digits: "abcd", 
-    numericMoreThan4Digits: "123456", 
+    nonNumeric: "aaa", 
+    numericMoreThan4Digits: "123423", 
     nonNumericMoreThan4Digits: "abcdef", 
     numericLessThan4Digits: "12", 
     nonNumericLessThan4Digits: "ab",
@@ -22,17 +22,17 @@ export const registerPageTestData = {
   },
   fullName: {
     firstName: {
-      exceed30Char: "aaaaaaaaaaaaaaa",
+      exceed30Char: "Smartmekwamsuk",
       normal: "Smart",
       empty: ""
     },
     lastName: {
-      exceed30Char: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      exceed30Char: "Teesudnailanlokloey",
       normal: "Goal",
       empty: ""
     },
     combinedFullName: {
-      exceed30Char: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      exceed30Char: "Smartmekwamsuk Teesudnailanlokloey"
     }
   }
 };
