@@ -140,7 +140,7 @@ test.describe("Unsuccessful Registration", () => {
       await register.fillRegisterForm(accountNumber,password,firstName,lastName
       );
       await register.clickRegisterButton();
-      await register.verifyRegisterFailure("Your fullname must be 30 characters or less, including spaces..");
+      await register.verifyRegisterFailure("Your fullname must be 30 characters or less, including spaces.");
     });
     test("TC-REG-12", async ({ page }) => {
       const accountNumber = registerPageTestData.accountNumber.numeric10Digits.notExist;
@@ -150,7 +150,7 @@ test.describe("Unsuccessful Registration", () => {
       await register.fillRegisterForm(accountNumber,password,firstName,lastName
       );
       await register.clickRegisterButton();
-      await register.verifyRegisterFailure("Your fullname must be 30 characters or less, including spaces..");
+      await register.verifyRegisterFailure("Your fullname must be 30 characters or less, including spaces.");
     });
   });
 
