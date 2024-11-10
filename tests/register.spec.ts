@@ -1,9 +1,9 @@
 import { test, expect } from "@playwright/test";
 import { RegisterPage } from "../supports/pages/registerPage";
 import { CommonPage } from "../supports/common/page.common";
-
-let common;
-let register;
+import { registerPageTestData } from "../fixtures/testData/register.page";
+let register: RegisterPage;
+let common: CommonPage;
 let accountNumber = "0814939874";
 
 test.beforeEach(async ({ page }) => {
@@ -15,13 +15,18 @@ test.beforeEach(async ({ page }) => {
   await register.clickRegisterLink();
 });
 
-test.describe("Successful Registration", () => {
-  test("Registration Successful", async ({ page }) => {
+test.describe("Scenario: Register Successful", () => {
+  test("TC-REG-01", async ({ page }) => {
+    const accountNumber = registerPageTestData.accountNumber.numeric10Digits.isExist;
+    const password = registerPageTestData.password.numeric4Digit;
+    const firstName = registerPageTestData.fullName.firstName.normal;
+    const lastName = registerPageTestData.fullName.lastName.normal;
+   
     await register.fillRegisterForm(
       accountNumber,
-      "1234",
-      "aphirak",
-      "phothisa"
+      password,
+      firstName,
+      lastName
     );
     await register.clickRegisterButton();
     await common.VerifyAlertMessage("Registration successful!");
@@ -30,11 +35,67 @@ test.describe("Successful Registration", () => {
 
 test.describe("Unsuccessful Registration", () => {
   test.describe("Invaild Account Number", () => {
-    test("Account number less than 10 digits", async ({ page }) => {});
+    test("TC-REG-02", async ({ page }) => {
+      const accountNumber = registerPageTestData.accountNumber.numeric10Digits.isExist;
+      const password = registerPageTestData.password.numeric4Digit;
+      const firstName = registerPageTestData.fullName.firstName.normal;
+      const lastName = registerPageTestData.fullName.lastName.normal;
+      await register.fillRegisterForm(accountNumber,password,firstName,lastName
+      );
+      await register.clickRegisterButton();
+      await register.verifyRegisterFailure("This account ID is already in use. Please choose another.");
+    });
 
-    test("Account number greater than 10 Digits", async ({ page }) => {});
-
-    test("Account number non-numeric", async ({ page }) => {});
+    test("TC-REG-03", async ({ page }) => {
+      const accountNumber = registerPageTestData.accountNumber.nonNumeric10Digits;
+      const password = registerPageTestData.password.numeric4Digit;
+      const firstName = registerPageTestData.fullName.firstName.normal;
+      const lastName = registerPageTestData.fullName.lastName.normal;
+      await register.fillRegisterForm(accountNumber,password,firstName,lastName
+      );
+      await register.clickRegisterButton();
+      await register.verifyRegisterFailure("This account ID is already in use. Please choose another.");
+    });
+    test("TC-REG-04", async ({ page }) => {
+      const accountNumber = registerPageTestData.accountNumber.numericMoreThan10Digits;
+      const password = registerPageTestData.password.numeric4Digit;
+      const firstName = registerPageTestData.fullName.firstName.normal;
+      const lastName = registerPageTestData.fullName.lastName.normal;
+      await register.fillRegisterForm(accountNumber,password,firstName,lastName
+      );
+      await register.clickRegisterButton();
+      await register.verifyRegisterFailure("This account ID is already in use. Please choose another.");
+    });
+    test("TC-REG-05", async ({ page }) => {
+      const accountNumber = registerPageTestData.accountNumber.numericLessThan10Digits;
+      const password = registerPageTestData.password.numeric4Digit;
+      const firstName = registerPageTestData.fullName.firstName.normal;
+      const lastName = registerPageTestData.fullName.lastName.normal;
+      await register.fillRegisterForm(accountNumber,password,firstName,lastName
+      );
+      await register.clickRegisterButton();
+      await register.verifyRegisterFailure("This account ID is already in use. Please choose another.");
+    });
+    test("TC-REG-06", async ({ page }) => {
+      const accountNumber = registerPageTestData.accountNumber.numeric10Digits.isExist;
+      const password = registerPageTestData.password.numeric4Digit;
+      const firstName = registerPageTestData.fullName.firstName.normal;
+      const lastName = registerPageTestData.fullName.lastName.normal;
+      await register.fillRegisterForm(accountNumber,password,firstName,lastName
+      );
+      await register.clickRegisterButton();
+      await register.verifyRegisterFailure("This account ID is already in use. Please choose another.");
+    });
+    test("TC-REG-02", async ({ page }) => {
+      const accountNumber = registerPageTestData.accountNumber.numeric10Digits.isExist;
+      const password = registerPageTestData.password.numeric4Digit;
+      const firstName = registerPageTestData.fullName.firstName.normal;
+      const lastName = registerPageTestData.fullName.lastName.normal;
+      await register.fillRegisterForm(accountNumber,password,firstName,lastName
+      );
+      await register.clickRegisterButton();
+      await register.verifyRegisterFailure("This account ID is already in use. Please choose another.");
+    });
   });
 
   test.describe("Invaild Password", () => {

@@ -71,4 +71,10 @@ export class RegisterPage {
       console.error("Failed to delete the user:", error); // Handle any errors
     }
   }
+  async verifyRegisterFailure(expectedErrorMessage: string) {
+    const errorMessageLocators = this.page.locator(
+      registerPageLocators.labelErrors.registerError
+    );
+    await expect(errorMessageLocators).toHaveText(expectedErrorMessage);
+  }
 }
