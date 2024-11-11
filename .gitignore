@@ -5,3 +5,4 @@ node_modules/
 /playwright/.cache/
 /heading.png
 /allure-results
+/gp.py
