@@ -9,7 +9,7 @@ export const registerPageLocators = {
         registerButton: "[cid='rc']"
     },
     labelErrors: { 
-        "registerError": "[cid='register-error-mes']",
+        registerError: "[cid='register-error-mes']",
     },
     lableLinks: { 
         registerLink: 'a[href="/register"]' 
