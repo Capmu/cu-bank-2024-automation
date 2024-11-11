@@ -77,7 +77,7 @@ test("TC-LGN-09", async ({ page }) => {
   await login.loginToCUBank(username, password);
   const usernameInputLocator = page.locator(loginPageLocators.textboxs.usernameInput);
   const validationMessage = await common.verifyRequiredFieldMessage(usernameInputLocator);
-  await login.verifyLoginFailure("Your account ID should contain numbers only.");
+  await login.verifyLoginFailure("Your password should contain numbers only.");
 });
 
 test("TC-LGN-10", async ({ page }) => {
