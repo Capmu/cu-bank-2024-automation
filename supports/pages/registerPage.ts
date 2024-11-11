@@ -15,6 +15,9 @@ export class RegisterPage {
       .click();
     await this.page.waitForURL(`${process.env.CUBANK_WEB}/register`);
   }
+  async verifyRegisterSuccessful() {
+    await this.page.waitForURL(`${process.env.CUBANK_WEB}`);
+  }
 
   async fillRegisterForm(
     accountNumber: string,

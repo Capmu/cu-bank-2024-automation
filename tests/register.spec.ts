@@ -30,6 +30,7 @@ test.describe("Scenario: Register Successful", () => {
     );
     await register.clickRegisterButton();
     await common.VerifyAlertMessage("Registration successful!");
+    await register.verifyRegisterSuccessful();
   });
 });
 
@@ -84,7 +85,7 @@ test.describe("Unsuccessful Registration", () => {
       await register.fillRegisterForm(accountNumber,password,firstName,lastName
       );
       await register.clickRegisterButton();
-      await register.verifyRegisterFailure("This account ID is already in use. Please choose another.");
+      await register.verifyRegisterFailure("Your account ID should contain numbers only.");
     });
   });
 
