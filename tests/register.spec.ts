@@ -15,7 +15,7 @@ test.beforeEach(async ({ page }) => {
   await register.clickRegisterLink();
 });
 
-test.describe("Scenario: Register Successful", () => {
+test.describe("Scenario: Registration Successful", () => {
   test("TC-REG-01", async ({ page }) => {
     const accountNumber = registerPageTestData.accountNumber.numeric10Digits.notExist;
     const password = registerPageTestData.password.numeric4Digit;
@@ -35,7 +35,7 @@ test.describe("Scenario: Register Successful", () => {
   });
 });
 
-test.describe("Unsuccessful Registration", () => {
+test.describe("Scenario: Registration Failed", () => {
   test.describe("Invaild Account Number", () => {
     test("TC-REG-02", async ({ page }) => {
       const accountNumber = registerPageTestData.accountNumber.numeric10Digits.isExist;
