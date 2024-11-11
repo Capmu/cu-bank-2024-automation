@@ -163,6 +163,7 @@ export class BankPage {
     } catch (error) {
       console.error("Failed to update Balance:", error); 
     }
+    await this.page.reload();
   }
 
   async selectPaymentType(Type: string) {
@@ -183,5 +184,74 @@ export class BankPage {
       await paymentTypeInput.click();
     }
   }
-    
+  
+  async enterPayAmonut(amount: string) {
+    const payAmonutInput = this.page.locator(
+      bankPageLocators.billPayment.amount
+    );
+    await payAmonutInput.fill(amount);
+  }
+
+  async getCurrentBalance(){
+    const accountDetails = await this.getAccountDetails();
+    console.log("Current Balance:", accountDetails.balance)
+    return Number(accountDetails.balance)
+  }
+
+  async clickPayConfirm() {
+    const payConfirmButton = this.page.locator(
+      bankPageLocators.billPayment.confirmButton
+    );
+    await payConfirmButton.click();
+  }
+
+  async verifyBalaceAfterBillPay(beforeBlancePayment: number , payAmount: string) {
+    const transactionAmount = parseFloat(payAmount);
+    console.log("transactionAmount", transactionAmount);
+
+    // Get the current balance
+    const currentBalance = this.accountDetails.balance;
+    console.log("currentBalance", currentBalance);
+
+    // Calculate the expected balance
+    const expectedBalance = beforeBlancePayment - transactionAmount;
+    console.log("expectedBalance", expectedBalance);
+
+    // Fetch the account details to get the actual balance
+    const accountDetails = await this.getAccountDetails();
+    const actualBalance = accountDetails.balance;
+    console.log("actualBalance", actualBalance);
+
+    expect(actualBalance).toBe(expectedBalance);
+  }
+  
+  async countHistories(historiesType: string = ''){
+    if (historiesType == "billpayment") {
+      const allHistories = this.page.locator(bankPageLocators.history.lable.allBillPayment)
+      const count = await allHistories.count();
+      return Number(count)
+    }
+    if (historiesType == "transfer") {
+      const allHistories = this.page.locator(bankPageLocators.history.lable.alltransfer)
+      const count = await allHistories.count();
+      return Number(count)
+    }
+    if (historiesType == "withdraw") {
+      const allHistories = this.page.locator(bankPageLocators.history.lable.allwithdraw)
+      const count = await allHistories.count();
+      return Number(count)
+    }
+    if (historiesType == "deposit") {
+      const allHistories = this.page.locator(bankPageLocators.history.lable.alldeposit)
+      const count = await allHistories.count();
+      return Number(count)
+    }else{
+      return 0
+    }
+  }
+
+  async verifyfailedtransaction(before: number, after: number) {
+    expect(before).toBe(after);
+  }
+
 }

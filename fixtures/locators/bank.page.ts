@@ -34,7 +34,12 @@ export const bankPageLocators = {
       waterCharge : "//input[@value='water']",
       electricCharge : "//input[@value='electric']",
       phoneCharge : "//input[@value='phone']",
-    }
+    },
+    amount : "[cid='b4']",
+    confirmButton : "[cid='bc']",
+    label: {
+      errorMsgLabel: "[cid='billpayment-error-mes']"
+    },
   },
   history: {
     lable: {
@@ -44,6 +49,10 @@ export const bankPageLocators = {
       amount: "p:nth-of-type(3)",
       balance: "p:nth-of-type(4)",
       type: "h2",
+      allBillPayment: "(//h2[contains(text(),'billpayment')])",
+      alldeposit: "(//h2[normalize-space()='deposit'])",
+      allwithdraw: "(//h2[normalize-space()='withdraw'])",
+      alltransfer: "(//h2[normalize-space()='transfer to'])"
     },
   },
 };
