@@ -3,8 +3,14 @@ import { bankPageLocators } from "../../fixtures/locators/bank.page";
 
 export class BankPage {
   readonly page: Page;
-  accountDetails: { accountId: string; name: string; balance: number; };
-  lastHistoryDetails: { type: string; date: string; target: string; amount: number; balance: number; };
+  accountDetails: { accountId: string; name: string; balance: number };
+  lastHistoryDetails: {
+    type: string;
+    date: string;
+    target: string;
+    amount: number;
+    balance: number;
+  };
 
   constructor(page: Page) {
     this.page = page;
