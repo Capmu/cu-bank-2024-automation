@@ -3,8 +3,14 @@ import { bankPageLocators } from "../../fixtures/locators/bank.page";
 
 export class BankPage {
   readonly page: Page;
-  accountDetails: { accountId: string; name: string; balance: number; };
-  lastHistoryDetails: { type: string; date: string; target: string; amount: number; balance: number; };
+  accountDetails: { accountId: string; name: string; balance: number };
+  lastHistoryDetails: {
+    type: string;
+    date: string;
+    target: string;
+    amount: number;
+    balance: number;
+  };
 
   constructor(page: Page) {
     this.page = page;
@@ -119,9 +125,9 @@ export class BankPage {
     expect(accountDetails?.balance?.toString()).toMatch(/^\d+(\.\d+)?$/); // Verify balance format
   }
 
-  async verifyHistoryTransaction(type: string, amount: number, target: string = '') {
+  async verifyHistoryTransaction(type: string, amount: number | string, target: string = '', decimalAmount: boolean = false) {
     const expectedType = type;
-    const expectedAmount = Number(amount);
+    const expectedAmount = decimalAmount ? amount : Number(amount);
     const expectedBalance = this.accountDetails.balance;
 
     const actualType = this.lastHistoryDetails.type;
@@ -136,7 +142,7 @@ export class BankPage {
     // Verify date format
     const datePattern: RegExp = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/;
     expect(actualDate).toMatch(datePattern);
-
+    
     // Verify amount
     expect(actualAmount).toBe(expectedAmount);
 
