@@ -31,6 +31,7 @@ test.describe("Scenario: Register Successful", () => {
     await register.clickRegisterButton();
     await common.VerifyAlertMessage("Registration successful!");
     await register.verifyRegisterSuccessful();
+    await register.deleteUser(accountNumber);
   });
 });
 
@@ -156,8 +157,4 @@ test.describe("Unsuccessful Registration", () => {
   });
 
 
-});
-
-test.afterEach(async ({ page }) => {
-  await register.deleteUser(accountNumber);
 });
