@@ -13,6 +13,16 @@ test.beforeEach(async ({ page }) => {
 
 });
 
+test.describe("Scenario: Login Successful", () => {
+  test("TC-LGN-01", async ({ page }) => {
+    const username = loginPageTestData.accountNumber.numeric10Digits.isExist;
+    const password = loginPageTestData.password.numeric4Digit.isExist;
+    await login.loginToCUBank(username, password);
+    await login.verifyRedirectAccountPage();
+    await login.verifyLogOutLink();
+  });
+});
+
 test.describe("Scenario: Login Not Successful", () => {
 test("TC-LGN-02", async ({ page }) => {
   const username = loginPageTestData.accountNumber.numeric10Digits.notExist;

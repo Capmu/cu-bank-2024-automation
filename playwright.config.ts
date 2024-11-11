@@ -41,6 +41,8 @@ export default defineConfig({
     ["allure-playwright"], 
     ["html"]
   ],
+  /* Set global timeout for each test */
+  timeout: 10000, // Sets each test to a 60-second timeout
   // dd  
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
@@ -49,6 +51,8 @@ export default defineConfig({
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
+    headless: false,
+    // slowMo: 5000,
   },
 
   /* Configure projects for major browsers */

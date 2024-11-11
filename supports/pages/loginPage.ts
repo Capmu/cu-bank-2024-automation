@@ -28,8 +28,13 @@ export class LoginPage {
     await loginButton.click();
   }
 
-  async verifyLoginSuccessful() {
+  async verifyRedirectAccountPage() {
     await this.page.waitForURL(`${process.env.CUBANK_WEB}/account/`);
+  }
+  
+  async verifyLogOutLink() {
+    const logOutLink = await this.page.locator('text=LOG OUT');
+    await expect(logOutLink).toBeVisible();
   }
 
   async loginToCUBank(username: string, password: string) {
