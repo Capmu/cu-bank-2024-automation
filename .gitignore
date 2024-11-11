@@ -5,3 +5,7 @@ node_modules/
 /playwright/.cache/
 /heading.png
 /allure-results
+<<<<<<< HEAD
+=======
+/gp.py
+>>>>>>> main
