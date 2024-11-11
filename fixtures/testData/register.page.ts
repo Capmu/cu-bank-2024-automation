@@ -2,7 +2,7 @@ export const registerPageTestData = {
   accountNumber: {
     numeric10Digits: { 
       isExist: "0801234567",
-      notExist: "0814939882"
+      notExist: "0814939883"
     },
     nonNumeric10Digits: "aaaaaaaaaa", 
     numericMoreThan10Digits: "081493988011", 
