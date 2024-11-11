@@ -22,5 +22,12 @@ export const loginPageTestData = {
     numericLessThan4Digits: "12", 
     nonNumericLessThan4Digits: "ab",
     empty: ""
+  },
+  billPaymentaccount: {
+    accountNumber: { 
+      isExist: "0968767562",
+    },
+    password : "1965" ,
+    empty: ""
   }
 };

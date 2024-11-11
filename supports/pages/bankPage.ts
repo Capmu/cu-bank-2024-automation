@@ -1,5 +1,6 @@
 import { Page, expect } from "@playwright/test";
 import { bankPageLocators } from "../../fixtures/locators/bank.page";
+import { CommonMongoDB } from  "../common/mongo.common";
 
 export class BankPage {
   readonly page: Page;
@@ -18,14 +19,14 @@ export class BankPage {
 
   async enterDepositAmonut(amount: string) {
     const depositAmonutInput = this.page.locator(
-      bankPageLocators.deposit.textboxs.amountInput
+      bankPageLocators.title.deposit.textboxs.amountInput
     );
     await depositAmonutInput.fill(amount);
   }
 
   async clickDepositConfirm() {
     const depositConfirmButton = this.page.locator(
-      bankPageLocators.deposit.buttons.confirmButton
+      bankPageLocators.title.deposit.buttons.confirmButton
     );
     await depositConfirmButton.click();
   }
@@ -152,4 +153,35 @@ export class BankPage {
     // Verify target
     expect(actualTarget).toBe(target);
   }
+
+  async setBalance(target: number,  accountId: string) {
+    const commonMongoDB = new CommonMongoDB(this.page); // Create an instance of CommonMongoDB
+    try {
+      await commonMongoDB.updateUserBalance(accountId, target); // Call fetchUser and await the result
+      const accountDetails = await this.getAccountDetails();
+      console.log("Precondition Balance:", accountDetails.balance)
+    } catch (error) {
+      console.error("Failed to update Balance:", error); 
+    }
+  }
+
+  async selectPaymentType(Type: string) {
+    if (Type == "water") {
+      const paymentTypeInput = this.page.locator(
+        bankPageLocators.billPayment.paymentType.waterCharge
+      );
+      await paymentTypeInput.click();
+    }else if (Type == "electric") {
+      const paymentTypeInput = this.page.locator(
+        bankPageLocators.billPayment.paymentType.electricCharge
+      );
+      await paymentTypeInput.click();
+    }else if (Type == "phone") {
+      const paymentTypeInput = this.page.locator(
+        bankPageLocators.billPayment.paymentType.phoneCharge
+      );
+      await paymentTypeInput.click();
+    }
+  }
+    
 }

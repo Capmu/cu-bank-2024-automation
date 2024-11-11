@@ -80,4 +80,25 @@ export class CommonMongoDB {
       }
     }
   }
+
+  async updateUserBalance(accountId: string, newBalance: number): Promise<void> {
+    try {
+      const user = await this.fetchUser(accountId); // Fetch the user first
+      const client = await this.connectToMongoDB();
+      const collection = await this.getUserCollection(client); // Get the collection reference
+
+      const result = await collection.updateOne( // อัพเดทค่า balance ของผู้ใช้ที่มี accountId ตรงกัน
+        { accountId }, // ค้นหาจาก accountId
+        { $set: { balance: newBalance } } // อัพเดท balance
+      );
+    } catch (error) {
+      console.error("Error updating user balance:", error);
+    } finally {
+      if (this.client) {
+        await this.client.close(); // Close the connection
+        console.log("MongoDB connection closed.");
+      }
+    }
+  }
+
 }

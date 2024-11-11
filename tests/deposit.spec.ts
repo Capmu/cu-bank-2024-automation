@@ -11,7 +11,7 @@ const NON_NUMERIC_ERROR_MESSAGE = "Invalid balance amount. Please enter a valid 
 
 async function verifyDepositFailure(page: any, expectedErrorMessage: string) {
   const errorMessageLocators = page.locator(
-    bankPageLocators.deposit.label.errorMsgLabel
+    bankPageLocators.title.deposit.label.errorMsgLabel
   );
   await expect(errorMessageLocators).toHaveText(expectedErrorMessage);
 }

@@ -29,7 +29,13 @@ export const bankPageLocators = {
     confirmButton: "[cid='tc']",
     errorMsg: '[cid="transfer-error-mes"]',
   },
-  billPayment: {},
+  billPayment: {
+    paymentType : {
+      waterCharge : "//input[@value='water']",
+      electricCharge : "//input[@value='electric']",
+      phoneCharge : "//input[@value='phone']",
+    }
+  },
   history: {
     lable: {
       historyList: ".history-list .account-form > div",
