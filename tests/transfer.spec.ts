@@ -84,6 +84,20 @@ test.describe("Scenario: Transfer Failed", () => {
     );
   });
 
+  test("TC-TRN-05", async ({ page }) => {
+    const targetAccountNumber = "9032957004";
+    const targetPassword = "1234";
+    const amount = "10";
+    await login.loginToCUBank(username, password);
+    await transferPage.getAccountDetails();
+    await transferPage.enterAccountNumber(targetAccountNumber);
+    await transferPage.enterAmount(amount);
+    await transferPage.clickTransferConfirm();
+    await transferPage.verifyTransferFailure(
+      "We couldn't find the recipient's account. Please double-check the account ID."
+    );
+  });
+
   test("TC-TRN-06", async ({ page }) => {
     const targetAccountNumber = "9032957003";
     const targetPassword = "1234";
@@ -115,11 +129,12 @@ test.describe("Scenario: Transfer Failed", () => {
   test("TC-TRN-08", async ({ page }) => {
     const targetAccountNumber = "0814939873";
     const targetPassword = "1234";
-    const amount = "text";
+    const amount = "tttt";
     await login.loginToCUBank(username, password);
     await transferPage.getAccountDetails();
     await transferPage.enterAccountNumber(targetAccountNumber);
     await transferPage.enterAmount(amount);
+    await transferPage.waiting();
     await transferPage.clickTransferConfirm();
     await transferPage.verifyTransferFailure(
       "Invalid balance amount. Please enter a valid number."

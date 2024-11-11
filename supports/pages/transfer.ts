@@ -48,6 +48,9 @@ export class TransferPage {
 
     return this.accountDetails; // Return the account details
   }
+  async waiting() {
+    await this.page.waitForTimeout(2000);
+  }
 
   async verifyTransferFailure(errorMessage: string) {
     await this.page.waitForTimeout(2000);
