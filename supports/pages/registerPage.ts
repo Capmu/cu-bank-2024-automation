@@ -15,6 +15,9 @@ export class RegisterPage {
       .click();
     await this.page.waitForURL(`${process.env.CUBANK_WEB}/register`);
   }
+  async verifyRegisterSuccessful() {
+    await this.page.waitForURL(`${process.env.CUBANK_WEB}`);
+  }
 
   async fillRegisterForm(
     accountNumber: string,
@@ -70,5 +73,11 @@ export class RegisterPage {
     } catch (error) {
       console.error("Failed to delete the user:", error); // Handle any errors
     }
+  }
+  async verifyRegisterFailure(expectedErrorMessage: string) {
+    const errorMessageLocators = this.page.locator(
+      registerPageLocators.labelErrors.registerError
+    );
+    await expect(errorMessageLocators).toHaveText(expectedErrorMessage);
   }
 }

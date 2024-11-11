@@ -8,6 +8,7 @@ export class CommonPage {
   }
 
   async navigateToCUBankPage() {
+    console.log(process.env.CUBANK_WEB);
     await this.page.goto(process.env.CUBANK_WEB as string);
   }
 
@@ -35,5 +36,3 @@ export class CommonPage {
     });
   }
 }
-
-
