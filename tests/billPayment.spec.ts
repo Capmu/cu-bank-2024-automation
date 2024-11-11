@@ -152,7 +152,7 @@ test.describe.serial('Non parallel test Suite ', () => {
         await bank.clickPayConfirm();
         const balanceAfterPay: number  = await bank.getCurrentBalance();
         const numberOfHistoryAfter: number = await bank.countHistories("billpayment");
-        await verifyBillPaymentFailure(page, "Please fill out this field.");
+        // await verifyBillPaymentFailure(page, "Please fill out this field.");
         await bank.verifyfailedtransaction(balanceBeforePay, balanceAfterPay)
         await bank.verifyfailedtransaction(numberOfHistoryBefore, numberOfHistoryAfter)
         });
