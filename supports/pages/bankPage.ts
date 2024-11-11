@@ -125,9 +125,9 @@ export class BankPage {
     expect(accountDetails?.balance?.toString()).toMatch(/^\d+(\.\d+)?$/); // Verify balance format
   }
 
-  async verifyHistoryTransaction(type: string, amount: number | string, target: string = '', decimalAmount: boolean = false) {
+  async verifyHistoryTransaction(type: string, amount: number | string, target: string = '', checkAmountString: boolean = false) {
     const expectedType = type;
-    const expectedAmount = decimalAmount ? amount : Number(amount);
+    const expectedAmount = checkAmountString ? amount : Number(amount);
     const expectedBalance = this.accountDetails.balance;
 
     const actualType = this.lastHistoryDetails.type;
