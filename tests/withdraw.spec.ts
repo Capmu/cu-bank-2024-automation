@@ -3,28 +3,39 @@ import { CommonPage } from "../supports/common/page.common";
 import { LoginPage } from "../supports/pages/loginPage";
 import { test, expect } from "@playwright/test";
 import { WithdrawPage } from "../supports/pages/withdrawPage";
+import { BankPage } from "../supports/pages/bankPage";
 
 let login: LoginPage;
 let common: CommonPage;
 let withdrawPage: WithdrawPage;
 let username;
 let password;
-test.beforeEach(async ({ page }) => {
-  username = process.env.USERNAME || "config.username";
-  password = process.env.PASSWORD || "config.password";
-
-  login = new LoginPage(page);
-  withdrawPage = new WithdrawPage(page);
-  //login before each test
-});
+let bank;
 
 test.describe("Scenario: Withdraw Successful", () => {
+
+  test.beforeEach(async ({ page }) => {
+    username = process.env.USERNAME_01 || "config.username";
+    password = process.env.PASSWORD_01 || "config.password";
+    
+    bank = new BankPage(page);
+    login = new LoginPage(page);
+    withdrawPage = new WithdrawPage(page);
+    const amount = "100";
+    await login.loginToCUBank(username, password);
+    await bank.verifyCurrentBalance();
+    await bank.enterDepositAmonut(amount);
+    await bank.clickDepositConfirm();
+    await bank.verifyBalaceAfter(amount);
+    await bank.getLastHistoryDetail();
+    await bank.verifyHistoryTransaction("deposit", Number(amount));
+  });
+
   test("TC-WTD-01", async ({ page }) => {
     const targetAccountNumber = "0814939873";
     const targetPassword = "1234";
     const amount = "100";
     let sourceTransaction = "";
-    await login.loginToCUBank(username, password);
     await withdrawPage.getAccountDetails();
     await withdrawPage.enterAccountNumber(targetAccountNumber);
     await withdrawPage.enterAmount(amount);
@@ -38,6 +49,16 @@ test.describe("Scenario: Withdraw Successful", () => {
 });
 
 test.describe("Scenario: Withdraw Failed", () => {
+
+  test.beforeEach(async ({ page }) => {
+    username = process.env.USERNAME_02 || "config.username";
+    password = process.env.PASSWORD_02 || "config.password";
+  
+    login = new LoginPage(page);
+    withdrawPage = new WithdrawPage(page);
+    //login before each test
+  });
+
   test("TC-WTD-02", async ({ page }) => {
     const targetAccountNumber = "0814939873";
     const targetPassword = "1234";
