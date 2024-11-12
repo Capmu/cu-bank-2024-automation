@@ -18,7 +18,13 @@ export const bankPageLocators = {
       errorMsgLabel: "[cid='deposite-error-mes']",
     },
   },
-  withdraw: {},
+  withdraw: {
+    logout: 'a:has-text("LOG OUT")',
+    accountNumber: "[cid='t1']",
+    amount: "[cid='w1']",
+    confirmButton: "[cid='wc']",
+    errorMsg: '[cid="withdraw-error-mes"]',
+  },
   transfer: {
     logout: 'a:has-text("LOG OUT")',
     accountNumber: "[cid='t1']",
