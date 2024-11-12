@@ -2,7 +2,7 @@ import { loginPageTestData } from "../fixtures/testData/login.page";
 import { CommonPage } from "../supports/common/page.common";
 import { LoginPage } from "../supports/pages/loginPage";
 import { test, expect } from "@playwright/test";
-import { TransferPage } from "../supports/pages/transfer";
+import { TransferPage } from "../supports/pages/transferPage";
 
 let login: LoginPage;
 let common: CommonPage;
