@@ -85,9 +85,9 @@ test.describe('Scenario: Bill Payment Failed', () => {
         // Create a new instances
         bank = new BankPage(page);
         common = new CommonPage(page);
-        await bank.setBalance(1000, username4);
         const login = new LoginPage(page);
         await login.loginToCUBank(username4, password4);
+        await bank.setBalance(1000, username4);
       });
 
     test("TC-BPM-04", async ({ page }) => {
