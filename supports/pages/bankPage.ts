@@ -19,14 +19,14 @@ export class BankPage {
 
   async enterDepositAmonut(amount: string) {
     const depositAmonutInput = this.page.locator(
-      bankPageLocators.title.deposit.textboxs.amountInput
+      bankPageLocators.deposit.textboxs.amountInput
     );
     await depositAmonutInput.fill(amount);
   }
 
   async clickDepositConfirm() {
     const depositConfirmButton = this.page.locator(
-      bankPageLocators.title.deposit.buttons.confirmButton
+      bankPageLocators.deposit.buttons.confirmButton
     );
     await depositConfirmButton.click();
   }

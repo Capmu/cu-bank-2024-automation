@@ -33,8 +33,8 @@ test.beforeEach(async ({ page }) => {
     await bank.setBalance(1000, username);
   });
 
-test.describe.serial('Non parallel test Suite ', () => {
-    test("TC-BP-01", async ({ page }) => {
+test.describe('Scenario: Bill Payment Successful', () => {
+    test("TC-BPM-01", async ({ page }) => {
         const paymentType = "water";
         const amount = "100";
         const balanceBeforePay: number  = await bank.getCurrentBalance();
@@ -46,7 +46,7 @@ test.describe.serial('Non parallel test Suite ', () => {
         await bank.verifyHistoryTransaction('billpayment', Number(amount), paymentType);
     });
     
-    test("TC-BP-02", async ({ page }) => {
+    test("TC-BPM-02", async ({ page }) => {
         const paymentType = "electric";
         const amount = "100";
         const balanceBeforePay: number  = await bank.getCurrentBalance();
@@ -58,7 +58,7 @@ test.describe.serial('Non parallel test Suite ', () => {
         await bank.verifyHistoryTransaction('billpayment', Number(amount), paymentType);
     });
     
-    test("TC-BP-03", async ({ page }) => {
+    test("TC-BPM-03", async ({ page }) => {
         const paymentType = "phone";
         const amount = "100";
         const balanceBeforePay: number  = await bank.getCurrentBalance();
@@ -69,8 +69,10 @@ test.describe.serial('Non parallel test Suite ', () => {
         await bank.getLastHistoryDetail();
         await bank.verifyHistoryTransaction('billpayment', Number(amount), paymentType);
     });
-    
-    test("TC-BP-04", async ({ page }) => {
+  });
+
+test.describe('Scenario: Bill Payment Failed', () => { 
+    test("TC-BPM-04", async ({ page }) => {
         const amount = "100";
         const balanceBeforePay: number  = await bank.getCurrentBalance();
         const numberOfHistoryBefore: number = await bank.countHistories("billpayment");
@@ -82,7 +84,7 @@ test.describe.serial('Non parallel test Suite ', () => {
         await bank.verifyfailedtransaction(numberOfHistoryBefore, numberOfHistoryAfter)
     });
 
-    test("TC-BP-05", async ({ page }) => {
+    test("TC-BPM-05", async ({ page }) => {
         const paymentType = "water";
         const amount = "1001";
         const balanceBeforePay: number  = await bank.getCurrentBalance();
@@ -97,7 +99,7 @@ test.describe.serial('Non parallel test Suite ', () => {
         await bank.verifyfailedtransaction(numberOfHistoryBefore, numberOfHistoryAfter)
       });
 
-    test("TC-BP-06", async ({ page }) => {
+    test("TC-BPM-06", async ({ page }) => {
         const paymentType = "electric";
         const amount = "abc";
         const balanceBeforePay: number  = await bank.getCurrentBalance();
@@ -112,7 +114,7 @@ test.describe.serial('Non parallel test Suite ', () => {
         await bank.verifyfailedtransaction(numberOfHistoryBefore, numberOfHistoryAfter)
         });
 
-    test("TC-BP-07", async ({ page }) => {
+    test("TC-BPM-07", async ({ page }) => {
         const paymentType = "phone";
         const amount = "999.5";
         const balanceBeforePay: number  = await bank.getCurrentBalance();
@@ -127,7 +129,7 @@ test.describe.serial('Non parallel test Suite ', () => {
         await bank.verifyfailedtransaction(numberOfHistoryBefore, numberOfHistoryAfter)
         });
 
-    test("TC-BP-08", async ({ page }) => {
+    test("TC-BPM-08", async ({ page }) => {
         const paymentType = "water";
         const amount = "0";
         const balanceBeforePay: number  = await bank.getCurrentBalance();
@@ -142,7 +144,7 @@ test.describe.serial('Non parallel test Suite ', () => {
         await bank.verifyfailedtransaction(numberOfHistoryBefore, numberOfHistoryAfter)
         });
 
-    test("TC-BP-09", async ({ page }) => {
+    test("TC-BPM-09", async ({ page }) => {
         const paymentType = "electric";
         const amount = "";
         const balanceBeforePay: number  = await bank.getCurrentBalance();
@@ -152,12 +154,12 @@ test.describe.serial('Non parallel test Suite ', () => {
         await bank.clickPayConfirm();
         const balanceAfterPay: number  = await bank.getCurrentBalance();
         const numberOfHistoryAfter: number = await bank.countHistories("billpayment");
-        // await verifyBillPaymentFailure(page, "Please fill out this field.");
+        await verifyBillPaymentFailure(page, "Please fill out this field.");
         await bank.verifyfailedtransaction(balanceBeforePay, balanceAfterPay)
         await bank.verifyfailedtransaction(numberOfHistoryBefore, numberOfHistoryAfter)
         });
 
-    test("TC-BP-10", async ({ page }) => {
+    test("TC-BPM-10", async ({ page }) => {
         const paymentType = "phone";
         const amount = "999.0";
         const balanceBeforePay: number  = await bank.getCurrentBalance();
@@ -170,5 +172,6 @@ test.describe.serial('Non parallel test Suite ', () => {
         await verifyBillPaymentFailure(page, "The balance amount must be a whole number with no decimals.");
         await bank.verifyfailedtransaction(balanceBeforePay, balanceAfterPay)
         await bank.verifyfailedtransaction(numberOfHistoryBefore, numberOfHistoryAfter)
-        });    
-  });
+        });
+
+});
