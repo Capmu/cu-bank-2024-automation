@@ -6,22 +6,25 @@ export const bankPageLocators = {
       name: 'h2:has-text("Name:") + h1',
       balance: 'h2:has-text("Balance:") + h1',
     },
-    deposit: {
-      textboxs: {
-        amountInput: "[cid='d1']",
-      },
-      buttons: {
-        confirmButton: "[cid='dc']",
-      },
-      label: {
-        errorMsgLabel: "[cid='deposite-error-mes']",
-      },
+  },
+  deposit: {
+    textboxs: {
+      amountInput: "[cid='d1']",
     },
     buttons: {
       confirmButton: "[cid='dc']",
     },
+    label: {
+      errorMsgLabel: "[cid='deposite-error-mes']",
+    },
   },
-  withdraw: {},
+  withdraw: {
+    logout: 'a:has-text("LOG OUT")',
+    accountNumber: "[cid='t1']",
+    amount: "[cid='w1']",
+    confirmButton: "[cid='wc']",
+    errorMsg: '[cid="withdraw-error-mes"]',
+  },
   transfer: {
     logout: 'a:has-text("LOG OUT")',
     accountNumber: "[cid='t1']",
