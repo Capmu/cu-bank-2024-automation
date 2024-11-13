@@ -25,9 +25,15 @@ export const loginPageTestData = {
   },
   billPaymentaccount: {
     accountNumber: { 
-      isExist: "0968767562",
+      account1: "0968767562",
+      account2: "0968767563",
+      account3: "0968767564",
+      account4: "0968767565"
     },
-    password : "1965" ,
+    password1 : "1965" ,
+    password2 : "1965" ,
+    password3 : "1965" ,
+    password4 : "1965" ,
     empty: ""
   }
 };

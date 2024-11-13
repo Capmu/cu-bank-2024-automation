@@ -7,6 +7,14 @@ import { bankPageLocators } from "../fixtures/locators/bank.page";
 
 let bank: BankPage;
 let common: CommonPage;
+const username1 = loginPageTestData.billPaymentaccount.accountNumber.account1;
+const password1 = loginPageTestData.billPaymentaccount.password1;
+const username2 = loginPageTestData.billPaymentaccount.accountNumber.account2;
+const password2 = loginPageTestData.billPaymentaccount.password2;
+const username3 = loginPageTestData.billPaymentaccount.accountNumber.account3;
+const password3 = loginPageTestData.billPaymentaccount.password3;
+const username4 = loginPageTestData.billPaymentaccount.accountNumber.account4;
+const password4 = loginPageTestData.billPaymentaccount.password4;
 
 async function verifyBillPaymentFailure(page: any, expectedErrorMessage: string) {
     const errorMessageLocators = page.locator(
@@ -17,24 +25,18 @@ async function verifyBillPaymentFailure(page: any, expectedErrorMessage: string)
 
 const NON_NUMERIC_ERROR_MESSAGE = "Invalid balance amount. Please enter a valid number."; // following the SRS
 
-test.beforeEach(async ({ page }) => {
-
-    // Create a new instances
-    bank = new BankPage(page);
-    common = new CommonPage(page);
-    const username = loginPageTestData.billPaymentaccount.accountNumber.isExist;
-    const password = loginPageTestData.billPaymentaccount.password;
-
-    //login before each test
-    const login = new LoginPage(page);
-    await login.loginToCUBank(username, password);
-
-    // Set the current balance to 1000
-    await bank.setBalance(1000, username);
-  });
-
 test.describe('Scenario: Bill Payment Successful', () => {
+
+    test.beforeEach(async ({ page }) => {
+        // Create a new instances
+        bank = new BankPage(page);
+        common = new CommonPage(page);
+      });
+
     test("TC-BPM-01", async ({ page }) => {
+        const login = new LoginPage(page);
+        await login.loginToCUBank(username1, password1);
+        await bank.setBalance(1000, username1);
         const paymentType = "water";
         const amount = "100";
         const balanceBeforePay: number  = await bank.getCurrentBalance();
@@ -47,6 +49,9 @@ test.describe('Scenario: Bill Payment Successful', () => {
     });
     
     test("TC-BPM-02", async ({ page }) => {
+        const login = new LoginPage(page);
+        await login.loginToCUBank(username2, password2);
+        await bank.setBalance(1000, username2);
         const paymentType = "electric";
         const amount = "1000";
         const balanceBeforePay: number  = await bank.getCurrentBalance();
@@ -59,6 +64,9 @@ test.describe('Scenario: Bill Payment Successful', () => {
     });
     
     test("TC-BPM-03", async ({ page }) => {
+        const login = new LoginPage(page);
+        await login.loginToCUBank(username3, password3);
+        await bank.setBalance(1000, username3);
         const paymentType = "phone";
         const amount = "1";
         const balanceBeforePay: number  = await bank.getCurrentBalance();
@@ -72,6 +80,15 @@ test.describe('Scenario: Bill Payment Successful', () => {
   });
 
 test.describe('Scenario: Bill Payment Failed', () => { 
+       
+    test.beforeEach(async ({ page }) => {
+        // Create a new instances
+        bank = new BankPage(page);
+        common = new CommonPage(page);
+        const login = new LoginPage(page);
+        await login.loginToCUBank(username4, password4);
+      });
+
     test("TC-BPM-04", async ({ page }) => {
         const amount = "100";
         const balanceBeforePay: number  = await bank.getCurrentBalance();
