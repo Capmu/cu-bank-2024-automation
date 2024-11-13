@@ -17,7 +17,7 @@ const NON_NUMERIC_ERROR_MESSAGE =
 
 async function verifyDepositFailure(page: any, expectedErrorMessage: string) {
   const errorMessageLocators = page.locator(
-    bankPageLocators.title.deposit.label.errorMsgLabel
+    bankPageLocators.deposit.label.errorMsgLabel
   );
   await expect(errorMessageLocators).toHaveText(expectedErrorMessage);
 }
