@@ -7,11 +7,7 @@ import { registerUser } from "../supports/common/api.common";
 
 let bank: BankPage;
 let commonPage: CommonPage;
-const ACCOUNT_ID = "6000000006";
-const PASSWORD = "6666";
-const ACCOUNT_ID_01 = "0814939800";
-const PASSWORD_01 = "1234";
-const USER_NAME = "Deposit User";
+
 const NON_NUMERIC_ERROR_MESSAGE =
   "Invalid balance amount. Please enter a valid number."; // following the SRS
 
@@ -23,18 +19,17 @@ async function verifyDepositFailure(page: any, expectedErrorMessage: string) {
 }
 
 test.beforeAll(async () => {
-  // Register a new user before all tests are run
+  // Ensure the user is registered before proceeding with the tests
   await registerUser(
-    ACCOUNT_ID,
-    PASSWORD,
-    USER_NAME
+    process.env.USERNAME_03 as string,
+    process.env.PASSWORD_03 as string,
+    "Deposit User 01"
   );
-});
-
-test.beforeEach(async ({ page }) => {
-  // Create a new instances
-  bank = new BankPage(page);
-  commonPage = new CommonPage(page);
+  await registerUser(
+    process.env.USERNAME_04 as string,
+    process.env.PASSWORD_04 as string,
+    "Deposit User 02"
+  );
 });
 
 test.describe("Scenario: Deposit Successful", () => {
@@ -45,8 +40,8 @@ test.describe("Scenario: Deposit Successful", () => {
 
     //login before each test
     const login = new LoginPage(page);
-    const accountId = ACCOUNT_ID_01;
-    const password = PASSWORD_01;
+    const accountId = process.env.USERNAME_04 as string;
+    const password = process.env.PASSWORD_04 as string;
     await login.loginToCUBank(accountId, password);
 
     // Ensure the current balance is a valid number before proceeding with the deposit
@@ -71,8 +66,8 @@ test.describe("Scenario: Deposit Failed", () => {
 
     //login before each test
     const login = new LoginPage(page);
-    const accountId = ACCOUNT_ID;
-    const password = PASSWORD;
+    const accountId = process.env.USERNAME_03 as string;
+    const password = process.env.PASSWORD_03 as string;
     await login.loginToCUBank(accountId, password);
 
     // Ensure the current balance is a valid number before proceeding with the deposit
@@ -130,8 +125,8 @@ test.describe("Scenario: Deposit with large amount (Additional)", () => {
 
     //login before each test
     const login = new LoginPage(page);
-    const accountId = ACCOUNT_ID;
-    const password = PASSWORD;
+    const accountId = process.env.USERNAME_03 as string;
+    const password = process.env.PASSWORD_03 as string;
     await login.loginToCUBank(accountId, password);
 
     // Ensure the current balance is a valid number before proceeding with the deposit
