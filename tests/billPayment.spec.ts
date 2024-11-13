@@ -48,7 +48,7 @@ test.describe('Scenario: Bill Payment Successful', () => {
     
     test("TC-BPM-02", async ({ page }) => {
         const paymentType = "electric";
-        const amount = "100";
+        const amount = "1000";
         const balanceBeforePay: number  = await bank.getCurrentBalance();
         await bank.selectPaymentType(paymentType);
         await bank.enterPayAmonut(amount);
@@ -60,7 +60,7 @@ test.describe('Scenario: Bill Payment Successful', () => {
     
     test("TC-BPM-03", async ({ page }) => {
         const paymentType = "phone";
-        const amount = "100";
+        const amount = "1";
         const balanceBeforePay: number  = await bank.getCurrentBalance();
         await bank.selectPaymentType(paymentType);
         await bank.enterPayAmonut(amount);
