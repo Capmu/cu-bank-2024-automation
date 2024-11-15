@@ -42,7 +42,6 @@ export default defineConfig({
     ["html"]
   ],
   /* Set global timeout for each test */
-  timeout: 10000, // Sets each test to a 60-second timeout
   // dd  
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {

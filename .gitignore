@@ -5,7 +5,6 @@ node_modules/
 /playwright/.cache/
 /heading.png
 /allure-results
-<<<<<<< HEAD
-=======
-/gp.py
->>>>>>> main
+/e2e
+.github
+tests-examples
